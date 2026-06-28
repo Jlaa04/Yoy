@@ -1,0 +1,2165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YOYO — Sweets & Desserts | Donuts, Crêpes, Gaufres en Tunisie</title>
+  <meta name="description" content="YOYO, la chaîne tunisienne de desserts et street food sucrée. Donuts, crêpes au chocolat, gaufres belges, milkshakes artisanaux. Découvrez nos points de vente et devenez franchisé." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    /* ========================================
+       RESET & BASE
+       ======================================== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: #080808;
+      color: #ffffff;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ul, ol {
+      list-style: none;
+    }
+
+    img, video {
+      max-width: 100%;
+      display: block;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      border: none;
+      outline: none;
+      background: none;
+      color: inherit;
+    }
+
+    /* ========================================
+       CSS VARIABLES
+       ======================================== */
+    :root {
+      --yellow: #FFD600;
+      --red: #E8001D;
+      --black-deep: #080808;
+      --black-card: #111111;
+      --white: #FFFFFF;
+      --gray: #888888;
+      --green: #06D6A0;
+      --font-display: 'Anton', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+      --font-condensed: 'Barlow Condensed', sans-serif;
+      --nav-height: 72px;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --transition-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --transition-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ========================================
+       SCROLL REVEAL
+       ======================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+    }
+
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========================================
+       NAVIGATION FIXE
+       ======================================== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      background: rgba(8, 8, 8, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: border-bottom-color 0.3s ease;
+    }
+
+    .nav.scrolled {
+      border-bottom-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .nav__logo {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--yellow);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav__links {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .nav__link {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--white);
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav__link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--yellow);
+      transition: width 0.3s var(--transition-smooth);
+    }
+
+    .nav__link:hover {
+      color: var(--yellow);
+    }
+
+    .nav__link:hover::after {
+      width: 100%;
+    }
+
+    .nav__right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav__socials {
+      display: flex;
+      gap: 10px;
+    }
+
+    .nav__social-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: all 0.3s ease;
+    }
+
+    .nav__social-icon:hover {
+      border-color: var(--yellow);
+      background: rgba(255, 214, 0, 0.1);
+    }
+
+    .nav__cta {
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav__cta:hover {
+      background: #ff1a33;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(232, 0, 29, 0.4);
+    }
+
+    /* Hamburger */
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+      padding: 4px;
+    }
+
+    .nav__hamburger span {
+      width: 26px;
+      height: 2.5px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .nav__hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .nav__hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav__hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Mobile Menu Overlay */
+    .nav__mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(8, 8, 8, 0.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .nav__mobile-menu.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .nav__mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--white);
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
+
+    .nav__mobile-menu a:hover {
+      color: var(--yellow);
+    }
+
+    /* ========================================
+       SECTION 1 — HERO
+       ======================================== */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: calc(var(--nav-height) + 40px) 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__left {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      z-index: 2;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 214, 0, 0.08);
+      border: 1px solid rgba(255, 214, 0, 0.2);
+      border-radius: 100px;
+      padding: 8px 20px;
+      width: fit-content;
+    }
+
+    .hero__badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--yellow);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 214, 0, 0.6); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(255, 214, 0, 0); }
+    }
+
+    .hero__badge-text {
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--yellow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      color: var(--yellow);
+      text-transform: uppercase;
+      line-height: 0.92;
+    }
+
+    .hero__title-line1 {
+      font-size: clamp(4rem, 8vw, 8rem);
+      display: block;
+    }
+
+    .hero__title-line2 {
+      font-size: clamp(3rem, 6vw, 6rem);
+      display: block;
+      color: var(--white);
+    }
+
+    .hero__subtitle {
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gray);
+    }
+
+    .hero__buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 16px 36px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: #ff1a33;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(232, 0, 29, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 16px 36px;
+      border-radius: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+      transform: translateY(-2px);
+    }
+
+    .hero__socials {
+      display: flex;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .hero__social-link {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .hero__social-link:hover {
+      border-color: var(--yellow);
+      background: rgba(255, 214, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Right */
+    .hero__right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 500px;
+    }
+
+    .hero__right-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+
+    .hero__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 24px;
+      opacity: 0.4;
+    }
+
+    .hero__glow {
+      position: absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 214, 0, 0.18) 0%, transparent 70%);
+      z-index: 1;
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+
+    .hero__watermark {
+      position: absolute;
+      font-family: var(--font-display);
+      font-size: clamp(8rem, 18vw, 18rem);
+      color: rgba(255, 214, 0, 0.04);
+      text-transform: uppercase;
+      letter-spacing: 10px;
+      z-index: 0;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .hero__dessert-emoji {
+      position: relative;
+      z-index: 2;
+      font-size: clamp(10rem, 20vw, 18rem);
+      filter: drop-shadow(0 20px 60px rgba(255, 214, 0, 0.2));
+      animation: float-hero 6s ease-in-out infinite;
+    }
+
+    @keyframes float-hero {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+
+    .hero__label {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-condensed);
+      font-weight: 900;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 10px 22px;
+      border-radius: 8px;
+      z-index: 3;
+      box-shadow: 0 4px 24px rgba(232, 0, 29, 0.4);
+    }
+
+    /* ========================================
+       SECTION 2 — TICKER
+       ======================================== */
+    .ticker {
+      background: var(--yellow);
+      padding: 14px 0;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker__track {
+      display: flex;
+      width: max-content;
+      animation: ticker-scroll 25s linear infinite;
+    }
+
+    .ticker__item {
+      font-family: var(--font-condensed);
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      color: #080808;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .ticker__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ========================================
+       SECTION 3 — MENU
+       ======================================== */
+    .menu {
+      padding: 100px 48px;
+      background: var(--black-deep);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-label {
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: var(--yellow);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    /* Tabs */
+    .menu__tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .menu__tab {
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 28px;
+      border-radius: 100px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: transparent;
+      color: var(--white);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .menu__tab:hover {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .menu__tab.active {
+      background: var(--yellow);
+      color: #080808;
+      border-color: var(--yellow);
+    }
+
+    /* Product Grid */
+    .menu__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 40px 24px;
+    }
+
+    /* Product Card */
+    .product-card {
+      background: var(--black-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 60px 24px 24px;
+      position: relative;
+      transition: all 0.4s var(--transition-smooth);
+      cursor: pointer;
+      overflow: visible;
+    }
+
+    .product-card:hover {
+      border-color: var(--yellow);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(255, 214, 0, 0.08);
+    }
+
+    .product-card__emoji {
+      position: absolute;
+      top: -36px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4.5rem;
+      transition: all 0.4s var(--transition-elastic);
+      filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.5));
+      z-index: 2;
+    }
+
+    .product-card:hover .product-card__emoji {
+      transform: translateX(-50%) translateY(-8px) scale(1.1);
+    }
+
+    .product-card__badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      z-index: 1;
+    }
+
+    .product-card__badge--red {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .product-card__badge--yellow {
+      background: var(--yellow);
+      color: #080808;
+    }
+
+    .product-card__price {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--yellow);
+    }
+
+    .product-card__name {
+      font-family: var(--font-condensed);
+      font-weight: 900;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-top: 12px;
+      margin-bottom: 8px;
+    }
+
+    .product-card__desc {
+      font-family: var(--font-body);
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: var(--gray);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .product-card__btn {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .product-card__btn:hover {
+      background: #ff1a33;
+      box-shadow: 0 4px 20px rgba(232, 0, 29, 0.35);
+    }
+
+    .product-card.hidden {
+      display: none;
+    }
+
+    /* ========================================
+       SECTION 4 — STORE LOCATOR
+       ======================================== */
+    .stores {
+      padding: 100px 48px;
+      background: var(--black-card);
+    }
+
+    .stores__layout {
+      display: grid;
+      grid-template-columns: 70% 30%;
+      gap: 24px;
+      margin-top: 48px;
+      min-height: 520px;
+    }
+
+    .stores__map-container {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border-subtle);
+    }
+
+    #map {
+      width: 100%;
+      height: 100%;
+      min-height: 520px;
+    }
+
+    .stores__locate-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      z-index: 600;
+      background: var(--yellow);
+      color: #080808;
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 12px 22px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .stores__locate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(255, 214, 0, 0.3);
+    }
+
+    .stores__list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+      max-height: 520px;
+      padding-right: 8px;
+    }
+
+    .stores__list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .stores__list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .stores__list::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .store-card {
+      background: var(--black-deep);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .store-card:hover {
+      border-color: var(--yellow);
+      transform: translateX(-2px);
+    }
+
+    .store-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .store-card__name {
+      font-family: var(--font-condensed);
+      font-weight: 900;
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+
+    .store-card__status {
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .store-card__status--open {
+      background: rgba(6, 214, 160, 0.15);
+      color: var(--green);
+    }
+
+    .store-card__status--closed {
+      background: rgba(232, 0, 29, 0.15);
+      color: var(--red);
+    }
+
+    .store-card__address {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+
+    .store-card__hours {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 12px;
+    }
+
+    .store-card__glovo {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .store-card__glovo:hover {
+      background: #ff1a33;
+    }
+
+    /* Leaflet custom */
+    .leaflet-popup-content-wrapper {
+      background: #111 !important;
+      color: #fff !important;
+      border-radius: 12px !important;
+      border: 1px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+    }
+
+    .leaflet-popup-tip {
+      background: #111 !important;
+    }
+
+    .leaflet-popup-content {
+      font-family: 'Barlow Condensed', sans-serif !important;
+      font-size: 0.95rem !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 1px !important;
+    }
+
+    /* ========================================
+       SECTION 5 — STATS
+       ======================================== */
+    .stats {
+      background: var(--yellow);
+      padding: 64px 48px;
+    }
+
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stats__item {
+      text-align: center;
+      padding: 24px 16px;
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .stats__item:last-child {
+      border-right: none;
+    }
+
+    .stats__number {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 4.5rem);
+      color: #080808;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stats__label {
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: rgba(0, 0, 0, 0.55);
+    }
+
+    /* ========================================
+       SECTION 6 — FRANCHISE
+       ======================================== */
+    .franchise {
+      padding: 100px 48px;
+      background: var(--black-deep);
+    }
+
+    .franchise__layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .franchise__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .franchise__title span {
+      color: var(--yellow);
+    }
+
+    .franchise__desc {
+      font-size: 1.05rem;
+      color: var(--gray);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .franchise__advantages {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .franchise__advantage {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .franchise__advantage-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--yellow);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .franchise__advantage-text {
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .franchise__advantage-desc {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-top: 4px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-family: var(--font-body);
+      font-weight: 400;
+    }
+
+    /* Franchise Form */
+    .franchise__form-card {
+      background: var(--black-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 40px;
+    }
+
+    .franchise__form-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 8px;
+    }
+
+    .franchise__form-subtitle {
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: var(--font-condensed);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--black-deep);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: var(--white);
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--yellow);
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+    }
+
+    .form-group select option {
+      background: #111;
+      color: #fff;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .franchise__submit {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+    }
+
+    .franchise__submit:hover {
+      background: #ff1a33;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(232, 0, 29, 0.4);
+    }
+
+    .franchise__privacy {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 14px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* ========================================
+       TOAST
+       ======================================== */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--yellow);
+      color: #080808;
+      font-family: var(--font-condensed);
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 18px 32px;
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(255, 214, 0, 0.3);
+      z-index: 2000;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: transform 0.5s var(--transition-elastic), opacity 0.4s ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer {
+      background: var(--black-card);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 64px 48px 32px;
+    }
+
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer__logo {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--yellow);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .footer__tagline {
+      font-size: 0.95rem;
+      color: var(--gray);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .footer__socials {
+      display: flex;
+      gap: 12px;
+    }
+
+    .footer__social {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer__social:hover {
+      border-color: var(--yellow);
+      background: rgba(255, 214, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .footer__heading {
+      font-family: var(--font-condensed);
+      font-weight: 900;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--yellow);
+      margin-bottom: 20px;
+    }
+
+    .footer__link {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--gray);
+      margin-bottom: 12px;
+      transition: color 0.3s ease;
+    }
+
+    .footer__link:hover {
+      color: var(--white);
+    }
+
+    .footer__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 24px;
+    }
+
+    .footer__copyright {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .footer__made {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* ========================================
+       RESPONSIVE — 1024px
+       ======================================== */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: calc(var(--nav-height) + 24px) 32px 32px;
+        min-height: auto;
+      }
+
+      .hero__right {
+        min-height: 350px;
+        margin-top: 32px;
+      }
+
+      .stores__layout {
+        grid-template-columns: 1fr;
+      }
+
+      .stores__list {
+        max-height: 300px;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 16px;
+        padding-right: 0;
+        padding-bottom: 8px;
+      }
+
+      .store-card {
+        min-width: 260px;
+        flex-shrink: 0;
+      }
+
+      .franchise__layout {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .stats__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats__item:nth-child(2) {
+        border-right: none;
+      }
+
+      .stats__item:nth-child(1),
+      .stats__item:nth-child(2) {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* ========================================
+       RESPONSIVE — 700px
+       ======================================== */
+    @media (max-width: 700px) {
+      .nav {
+        padding: 0 20px;
+      }
+
+      .nav__links,
+      .nav__socials {
+        display: none;
+      }
+
+      .nav__hamburger {
+        display: flex;
+      }
+
+      .hero,
+      .menu,
+      .stores,
+      .franchise,
+      .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .stats {
+        padding: 48px 20px;
+      }
+
+      .hero__title-line1 {
+        font-size: 3.5rem;
+      }
+
+      .hero__title-line2 {
+        font-size: 2.5rem;
+      }
+
+      .hero__buttons {
+        flex-direction: column;
+      }
+
+      .btn-primary, .btn-outline {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .menu__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 16px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer__grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .footer__bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+    }
+
+    /* ========================================
+       RESPONSIVE — 440px
+       ======================================== */
+    @media (max-width: 440px) {
+      .hero__title-line1 {
+        font-size: 2.8rem;
+      }
+
+      .hero__title-line2 {
+        font-size: 2rem;
+      }
+
+      .menu__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu__tabs {
+        gap: 8px;
+      }
+
+      .menu__tab {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+      }
+
+      .stats__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats__item {
+        border-right: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .stats__item:last-child {
+        border-bottom: none;
+      }
+
+      .franchise__form-card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================
+       NAVIGATION
+       ============================ -->
+  <nav class="nav" id="navbar">
+    <a href="#" class="nav__logo">YOYO</a>
+    <div class="nav__links">
+      <a href="#menu" class="nav__link">Menu</a>
+      <a href="#boutiques" class="nav__link">Boutiques</a>
+      <a href="#franchise" class="nav__link">Franchise</a>
+    </div>
+    <div class="nav__right">
+      <div class="nav__socials">
+        <a href="#" class="nav__social-icon" aria-label="Instagram">📸</a>
+        <a href="#" class="nav__social-icon" aria-label="TikTok">🎵</a>
+        <a href="#" class="nav__social-icon" aria-label="YouTube">▶️</a>
+      </div>
+      <button class="nav__cta" id="nav-cta-commander">Commander</button>
+    </div>
+    <div class="nav__hamburger" id="hamburger" aria-label="Ouvrir le menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="nav__mobile-menu" id="mobileMenu">
+    <a href="#menu" class="mobile-link">Menu</a>
+    <a href="#boutiques" class="mobile-link">Boutiques</a>
+    <a href="#franchise" class="mobile-link">Franchise</a>
+    <a href="#" class="mobile-link" style="color: var(--red);">Commander</a>
+  </div>
+
+  <!-- ============================
+       SECTION 1 — HERO
+       ============================ -->
+  <section class="hero" id="hero">
+    <div class="hero__left">
+      <div class="hero__badge">
+        <span class="hero__badge-dot"></span>
+        <span class="hero__badge-text" id="follower-counter">1.7M Followers</span>
+      </div>
+      <h1 class="hero__title">
+        <span class="hero__title-line1">YOYO</span>
+        <span class="hero__title-line2">SWEETS</span>
+      </h1>
+      <p class="hero__subtitle">Desserts & Street Food Sucrée — Tunisie</p>
+      <div class="hero__buttons">
+        <button class="btn-primary" id="hero-cta-commander">Commander maintenant 🛵</button>
+        <a href="#menu" class="btn-outline">Voir le menu</a>
+      </div>
+      <div class="hero__socials">
+        <a href="#" class="hero__social-link" aria-label="Instagram">📸</a>
+        <a href="#" class="hero__social-link" aria-label="TikTok">🎵</a>
+        <a href="#" class="hero__social-link" aria-label="YouTube">▶️</a>
+        <a href="#" class="hero__social-link" aria-label="Facebook">📘</a>
+      </div>
+    </div>
+    <div class="hero__right">
+      <div class="hero__right-bg">
+        <!-- Placeholder vidéo — remplacer src par un fichier MP4 de préparation de desserts -->
+        <video class="hero__video" autoplay muted loop playsinline>
+          <source src="" type="video/mp4" />
+        </video>
+        <div class="hero__glow"></div>
+        <span class="hero__watermark">YOYO</span>
+      </div>
+      <span class="hero__dessert-emoji" aria-hidden="true">🍩</span>
+      <span class="hero__label">Loaded Donut</span>
+    </div>
+  </section>
+
+  <!-- ============================
+       SECTION 2 — TICKER
+       ============================ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track" id="tickerTrack">
+      <!-- Le contenu est dupliqué en JS pour un défilement infini -->
+    </div>
+  </div>
+
+  <!-- ============================
+       SECTION 3 — MENU
+       ============================ -->
+  <section class="menu" id="menu">
+    <div class="section-header reveal">
+      <p class="section-label">Nos Créations</p>
+      <h2 class="section-title">Le Menu</h2>
+    </div>
+    <div class="menu__tabs reveal" id="menuTabs">
+      <button class="menu__tab active" data-filter="all">Tout</button>
+      <button class="menu__tab" data-filter="donuts">Donuts</button>
+      <button class="menu__tab" data-filter="crepes">Crêpes & Gaufres</button>
+      <button class="menu__tab" data-filter="milkshakes">Milkshakes</button>
+    </div>
+    <div class="menu__grid" id="menuGrid">
+      <!-- Cartes produit injectées en JS -->
+    </div>
+  </section>
+
+  <!-- ============================
+       SECTION 4 — STORE LOCATOR
+       ============================ -->
+  <section class="stores" id="boutiques">
+    <div class="section-header reveal">
+      <p class="section-label">Nos Points de Vente</p>
+      <h2 class="section-title">Boutiques</h2>
+    </div>
+    <div class="stores__layout reveal">
+      <div class="stores__map-container">
+        <div id="map"></div>
+        <button class="stores__locate-btn" id="locateBtn">📍 Me localiser automatiquement</button>
+      </div>
+      <div class="stores__list" id="storesList">
+        <!-- Cartes boutique injectées en JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       SECTION 5 — STATS
+       ============================ -->
+  <section class="stats">
+    <div class="stats__grid reveal">
+      <div class="stats__item">
+        <div class="stats__number">+5</div>
+        <div class="stats__label">Points de vente</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__number">150K+</div>
+        <div class="stats__label">Clients satisfaits</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__number">4.8★</div>
+        <div class="stats__label">Note Glovo</div>
+      </div>
+      <div class="stats__item">
+        <div class="stats__number">2019</div>
+        <div class="stats__label">Fondation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       SECTION 6 — FRANCHISE
+       ============================ -->
+  <section class="franchise" id="franchise">
+    <div class="franchise__layout">
+      <div class="franchise__left reveal">
+        <h2 class="franchise__title">Devenez <span>franchisé</span> YOYO</h2>
+        <p class="franchise__desc">
+          Rejoignez un réseau de desserts en pleine expansion en Tunisie. 
+          YOYO accompagne chaque franchisé avec une formation complète, 
+          un concept clé en main et un soutien marketing continu.
+        </p>
+        <div class="franchise__advantages">
+          <div class="franchise__advantage">
+            <span class="franchise__advantage-num">01</span>
+            <div>
+              <div class="franchise__advantage-text">Formation complète dès J1</div>
+              <div class="franchise__advantage-desc">Programme intensif couvrant opérations, recettes et gestion</div>
+            </div>
+          </div>
+          <div class="franchise__advantage">
+            <span class="franchise__advantage-num">02</span>
+            <div>
+              <div class="franchise__advantage-text">Supply chain centralisée</div>
+              <div class="franchise__advantage-desc">Approvisionnement unifié garantissant qualité et fraîcheur</div>
+            </div>
+          </div>
+          <div class="franchise__advantage">
+            <span class="franchise__advantage-num">03</span>
+            <div>
+              <div class="franchise__advantage-text">Intégration Glovo & réseaux sociaux</div>
+              <div class="franchise__advantage-desc">Présence digitale immédiate sur toutes les plateformes</div>
+            </div>
+          </div>
+          <div class="franchise__advantage">
+            <span class="franchise__advantage-num">04</span>
+            <div>
+              <div class="franchise__advantage-text">ROI moyen sous 18 mois</div>
+              <div class="franchise__advantage-desc">Retour sur investissement rapide avec un modèle éprouvé</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="franchise__form-card reveal">
+        <h3 class="franchise__form-title">Candidature Franchise</h3>
+        <p class="franchise__form-subtitle">Remplissez le formulaire ci-dessous, notre équipe vous recontactera sous 48 h.</p>
+        <form id="franchiseForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="franchise-prenom">Prénom & Nom</label>
+              <input type="text" id="franchise-prenom" name="prenom" placeholder="Votre nom complet" required />
+            </div>
+            <div class="form-group">
+              <label for="franchise-tel">Téléphone</label>
+              <input type="tel" id="franchise-tel" name="telephone" placeholder="+216 XX XXX XXX" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="franchise-email">Email</label>
+            <input type="email" id="franchise-email" name="email" placeholder="votre@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="franchise-ville">Ville ciblée</label>
+            <select id="franchise-ville" name="ville" required>
+              <option value="" disabled selected>Sélectionnez une ville</option>
+              <option value="tunis-centre">Tunis Centre</option>
+              <option value="la-marsa">La Marsa</option>
+              <option value="sousse">Sousse</option>
+              <option value="sfax">Sfax</option>
+              <option value="monastir">Monastir</option>
+              <option value="bizerte">Bizerte</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="franchise-motivation">Motivation</label>
+            <textarea id="franchise-motivation" name="motivation" placeholder="Pourquoi souhaitez-vous devenir franchisé YOYO ?" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="franchise__submit">Envoyer ma candidature →</button>
+          <p class="franchise__privacy">
+            🔒 Vos données sont confidentielles et ne seront jamais partagées avec des tiers. 
+            En soumettant ce formulaire, vous acceptez d'être recontacté par l'équipe YOYO.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================
+       FOOTER
+       ============================ -->
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">YOYO</div>
+        <p class="footer__tagline">
+          La référence street food sucrée en Tunisie. Donuts, crêpes, 
+          gaufres et milkshakes artisanaux depuis 2019.
+        </p>
+        <div class="footer__socials">
+          <a href="#" class="footer__social" aria-label="Instagram">📸</a>
+          <a href="#" class="footer__social" aria-label="TikTok">🎵</a>
+          <a href="#" class="footer__social" aria-label="YouTube">▶️</a>
+          <a href="#" class="footer__social" aria-label="Facebook">📘</a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer__heading">Navigation</h4>
+        <a href="#menu" class="footer__link">Menu</a>
+        <a href="#boutiques" class="footer__link">Boutiques</a>
+        <a href="#franchise" class="footer__link">Franchise</a>
+        <a href="#" class="footer__link">À propos</a>
+      </div>
+      <div>
+        <h4 class="footer__heading">Contact</h4>
+        <a href="mailto:contact@yoyo.tn" class="footer__link">contact@yoyo.tn</a>
+        <a href="tel:+21671000000" class="footer__link">+216 71 000 000</a>
+        <span class="footer__link">Tunis, Tunisie</span>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copyright">© 2025 YOYO Sweets & Desserts. Tous droits réservés.</span>
+      <span class="footer__made">Made with 🍓 in Tunisia</span>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">✅ Candidature envoyée avec succès !</div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    /* ========================================
+       DONNÉES — PRODUITS
+       ======================================== */
+    var products = [
+      {
+        id: 1,
+        name: "Donut Nutella Crunch",
+        desc: "Nutella, éclats de noisettes, glaçage caramel",
+        price: "4.500 DT",
+        badge: "Bestseller",
+        badgeColor: "red",
+        category: "donuts",
+        emoji: "🍩"
+      },
+      {
+        id: 2,
+        name: "Donut Glacé Framboise",
+        desc: "Glaçage rose, pépites de sucre, coulis framboise",
+        price: "4.000 DT",
+        badge: "Nouveau",
+        badgeColor: "yellow",
+        category: "donuts",
+        emoji: "🍩"
+      },
+      {
+        id: 3,
+        name: "Donut Triple Chocolat",
+        desc: "Trois textures : fondant, croustillant, aérien",
+        price: "4.500 DT",
+        badge: "Fan-fave",
+        badgeColor: "red",
+        category: "donuts",
+        emoji: "🍫"
+      },
+      {
+        id: 4,
+        name: "Crêpe Spéculoos Banane",
+        desc: "Crème spéculoos maison, banane, chantilly",
+        price: "5.500 DT",
+        badge: "Maison",
+        badgeColor: "yellow",
+        category: "crepes",
+        emoji: "🥞"
+      },
+      {
+        id: 5,
+        name: "Gaufre Fraises & Cream",
+        desc: "Gaufre belge, fraises fraîches, sirop",
+        price: "6.000 DT",
+        badge: "Saison",
+        badgeColor: "yellow",
+        category: "crepes",
+        emoji: "🧇"
+      },
+      {
+        id: 6,
+        name: "Pancakes Miel & Noix",
+        desc: "Stack 3 pancakes, miel local, noix grillées",
+        price: "5.000 DT",
+        badge: "Coup de ♥",
+        badgeColor: "red",
+        category: "crepes",
+        emoji: "🥞"
+      },
+      {
+        id: 7,
+        name: "Milkshake Kinder Bueno",
+        desc: "Glace vanille, Kinder Bueno mixé, chantilly",
+        price: "7.500 DT",
+        badge: "Bestseller",
+        badgeColor: "red",
+        category: "milkshakes",
+        emoji: "🥤"
+      },
+      {
+        id: 8,
+        name: "Milkshake Fraise Intense",
+        desc: "Fraises fraîches, coulis, glace artisanale",
+        price: "7.000 DT",
+        badge: "Fruité",
+        badgeColor: "yellow",
+        category: "milkshakes",
+        emoji: "🍓"
+      }
+    ];
+
+    /* ========================================
+       DONNÉES — BOUTIQUES
+       ======================================== */
+    var stores = [
+      {
+        id: 1,
+        name: "YOYO Carthage",
+        address: "Avenue Hamilcar, Carthage",
+        hours: "09:00 – 23:00",
+        open: true,
+        lat: 36.858,
+        lng: 10.325,
+        glovoUrl: "#"
+      },
+      {
+        id: 2,
+        name: "YOYO Lac 1",
+        address: "Les Berges du Lac, Lac 1",
+        hours: "10:00 – 00:00",
+        open: true,
+        lat: 36.840,
+        lng: 10.235,
+        glovoUrl: "#"
+      },
+      {
+        id: 3,
+        name: "YOYO Menzah",
+        address: "Cité El Menzah 6, Ariana",
+        hours: "10:00 – 23:30",
+        open: false,
+        lat: 36.862,
+        lng: 10.188,
+        glovoUrl: "#"
+      },
+      {
+        id: 4,
+        name: "YOYO Bardo",
+        address: "Rue de Bardo, Le Bardo",
+        hours: "09:00 – 22:30",
+        open: true,
+        lat: 36.810,
+        lng: 10.143,
+        glovoUrl: "#"
+      },
+      {
+        id: 5,
+        name: "YOYO Monastir",
+        address: "Avenue Habib Bourguiba, Monastir",
+        hours: "10:00 – 23:00",
+        open: true,
+        lat: 35.777,
+        lng: 10.832,
+        glovoUrl: "#"
+      }
+    ];
+
+    /* ========================================
+       TICKER — Défilement infini
+       ======================================== */
+    (function initTicker() {
+      var tickerItems = [
+        "Donuts", "Crêpes au Chocolat", "Gaufres Belges",
+        "Milkshakes", "Pancakes", "Ice Cream",
+        "Nutella Crunch", "Framboise Intense"
+      ];
+      var track = document.getElementById("tickerTrack");
+      var html = "";
+      /* Doubler le contenu pour le défilement infini */
+      for (var r = 0; r < 2; r++) {
+        for (var i = 0; i < tickerItems.length; i++) {
+          html += '<span class="ticker__item">' +
+                    tickerItems[i] +
+                    '<span class="ticker__dot"></span>' +
+                  '</span>';
+        }
+      }
+      track.innerHTML = html;
+    })();
+
+    /* ========================================
+       MENU — Rendu des cartes produit
+       ======================================== */
+    (function initMenu() {
+      var grid = document.getElementById("menuGrid");
+      var html = "";
+      for (var i = 0; i < products.length; i++) {
+        var p = products[i];
+        html += '<div class="product-card reveal" data-category="' + p.category + '">' +
+                  '<span class="product-card__emoji">' + p.emoji + '</span>' +
+                  '<span class="product-card__badge product-card__badge--' + p.badgeColor + '">' + p.badge + '</span>' +
+                  '<span class="product-card__price">' + p.price + '</span>' +
+                  '<h3 class="product-card__name">' + p.name + '</h3>' +
+                  '<p class="product-card__desc">' + p.desc + '</p>' +
+                  '<button class="product-card__btn" onclick="alert(\'Commande via Glovo à venir — ' + p.name.replace(/'/g, "\\'") + '\')">Commander →</button>' +
+                '</div>';
+      }
+      grid.innerHTML = html;
+    })();
+
+    /* Menu Tabs — filtrage */
+    (function initMenuTabs() {
+      var tabs = document.querySelectorAll(".menu__tab");
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener("click", function () {
+          var filter = this.getAttribute("data-filter");
+          /* Active state */
+          for (var j = 0; j < tabs.length; j++) {
+            tabs[j].classList.remove("active");
+          }
+          this.classList.add("active");
+          /* Filter cards */
+          var cards = document.querySelectorAll(".product-card");
+          for (var k = 0; k < cards.length; k++) {
+            var cat = cards[k].getAttribute("data-category");
+            if (filter === "all" || cat === filter) {
+              cards[k].classList.remove("hidden");
+            } else {
+              cards[k].classList.add("hidden");
+            }
+          }
+        });
+      }
+    })();
+
+    /* ========================================
+       STORE LOCATOR — Carte Leaflet
+       ======================================== */
+    var map;
+    var markers = [];
+
+    (function initMap() {
+      /* Centre sur la Tunisie */
+      map = L.map("map", {
+        center: [36.84, 10.22],
+        zoom: 11,
+        zoomControl: true,
+        attributionControl: false
+      });
+
+      /* Tuiles sombres via filtre CSS */
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 18
+      }).addTo(map);
+
+      /* Appliquer le filtre sombre aux tuiles */
+      var tilePane = map.getPane("tilePane");
+      if (tilePane) {
+        tilePane.style.filter = "invert(1) hue-rotate(180deg) brightness(0.85) saturate(0.5)";
+      }
+
+      /* Marqueurs custom */
+      for (var i = 0; i < stores.length; i++) {
+        var s = stores[i];
+        var color = s.open ? "#06D6A0" : "#E8001D";
+        var statusText = s.open ? "Ouvert" : "Fermé";
+
+        var icon = L.divIcon({
+          className: "custom-marker",
+          html: '<div style="' +
+                  'width: 18px; height: 18px; border-radius: 50%;' +
+                  'background: ' + color + ';' +
+                  'border: 3px solid #080808;' +
+                  'box-shadow: 0 0 12px ' + color + '60;' +
+                '"></div>',
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
+          popupAnchor: [0, -14]
+        });
+
+        var marker = L.marker([s.lat, s.lng], { icon: icon }).addTo(map);
+        marker.bindPopup(
+          '<div style="text-align:center;">' +
+            '<strong style="color: #FFD600;">' + s.name + '</strong><br/>' +
+            '<span style="color: #aaa; font-size: 0.8rem; text-transform: none; letter-spacing: 0;">' + s.address + '</span><br/>' +
+            '<span style="color: ' + color + '; font-size: 0.75rem;">' + statusText + ' · ' + s.hours + '</span>' +
+          '</div>'
+        );
+        markers.push(marker);
+      }
+    })();
+
+    /* Store List — Rendu */
+    (function initStoreList() {
+      var list = document.getElementById("storesList");
+      var html = "";
+      for (var i = 0; i < stores.length; i++) {
+        var s = stores[i];
+        var statusClass = s.open ? "store-card__status--open" : "store-card__status--closed";
+        var statusLabel = s.open ? "Ouvert" : "Fermé";
+
+        html += '<div class="store-card" data-store-index="' + i + '">' +
+                  '<div class="store-card__header">' +
+                    '<span class="store-card__name">' + s.name + '</span>' +
+                    '<span class="store-card__status ' + statusClass + '">' + statusLabel + '</span>' +
+                  '</div>' +
+                  '<div class="store-card__address">' + s.address + '</div>' +
+                  '<div class="store-card__hours">🕐 ' + s.hours + '</div>' +
+                  '<a href="' + s.glovoUrl + '" class="store-card__glovo" onclick="if(this.href.endsWith(\'#\')){event.preventDefault();alert(\'Lien Glovo à venir pour ' + s.name.replace(/'/g, "\\'") + '\');}">🛵 Commander sur Glovo</a>' +
+                '</div>';
+      }
+      list.innerHTML = html;
+
+      /* Clic sur carte boutique → flyTo */
+      var storeCards = document.querySelectorAll(".store-card");
+      for (var j = 0; j < storeCards.length; j++) {
+        storeCards[j].addEventListener("click", function (e) {
+          if (e.target.closest(".store-card__glovo")) return;
+          var idx = parseInt(this.getAttribute("data-store-index"));
+          var s = stores[idx];
+          map.flyTo([s.lat, s.lng], 15, { duration: 1.2 });
+          markers[idx].openPopup();
+        });
+      }
+    })();
+
+    /* Géolocalisation */
+    document.getElementById("locateBtn").addEventListener("click", function () {
+      if (!navigator.geolocation) {
+        alert("La géolocalisation n'est pas supportée par votre navigateur.");
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        var userLat = pos.coords.latitude;
+        var userLng = pos.coords.longitude;
+
+        /* Trouver le point de vente le plus proche (distance euclidienne) */
+        var closest = null;
+        var minDist = Infinity;
+        for (var i = 0; i < stores.length; i++) {
+          var dx = stores[i].lat - userLat;
+          var dy = stores[i].lng - userLng;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < minDist) {
+            minDist = dist;
+            closest = i;
+          }
+        }
+
+        /* Marqueur utilisateur */
+        var userIcon = L.divIcon({
+          className: "user-marker",
+          html: '<div style="' +
+                  'width: 14px; height: 14px; border-radius: 50%;' +
+                  'background: #4285F4;' +
+                  'border: 3px solid #fff;' +
+                  'box-shadow: 0 0 16px rgba(66,133,244,0.5);' +
+                '"></div>',
+          iconSize: [14, 14],
+          iconAnchor: [7, 7]
+        });
+        L.marker([userLat, userLng], { icon: userIcon }).addTo(map)
+          .bindPopup('<strong style="color: #4285F4;">Vous êtes ici</strong>');
+
+        /* FlyTo vers le point le plus proche */
+        if (closest !== null) {
+          map.flyTo([stores[closest].lat, stores[closest].lng], 15, { duration: 1.5 });
+          setTimeout(function () {
+            markers[closest].openPopup();
+          }, 1600);
+        }
+      }, function () {
+        alert("Impossible d'obtenir votre position. Vérifiez vos paramètres de localisation.");
+      });
+    });
+
+    /* ========================================
+       FORMULAIRE FRANCHISE
+       ======================================== */
+    document.getElementById("franchiseForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      /* Afficher le toast */
+      var toast = document.getElementById("toast");
+      toast.classList.add("show");
+      setTimeout(function () {
+        toast.classList.remove("show");
+      }, 4000);
+      /* Réinitialiser le formulaire */
+      this.reset();
+    });
+
+    /* ========================================
+       NAVIGATION — Scroll / Hamburger
+       ======================================== */
+    (function initNav() {
+      var navbar = document.getElementById("navbar");
+      var hamburger = document.getElementById("hamburger");
+      var mobileMenu = document.getElementById("mobileMenu");
+
+      /* Scroll → border visible */
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 40) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      /* Hamburger toggle */
+      hamburger.addEventListener("click", function () {
+        hamburger.classList.toggle("active");
+        mobileMenu.classList.toggle("open");
+        document.body.style.overflow = mobileMenu.classList.contains("open") ? "hidden" : "";
+      });
+
+      /* Fermer le menu mobile au clic sur un lien */
+      var mobileLinks = mobileMenu.querySelectorAll("a");
+      for (var i = 0; i < mobileLinks.length; i++) {
+        mobileLinks[i].addEventListener("click", function () {
+          hamburger.classList.remove("active");
+          mobileMenu.classList.remove("open");
+          document.body.style.overflow = "";
+        });
+      }
+    })();
+
+    /* ========================================
+       SCROLL REVEAL — IntersectionObserver
+       ======================================== */
+    (function initReveal() {
+      var els = document.querySelectorAll(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        /* Fallback pour navigateurs anciens */
+        for (var i = 0; i < els.length; i++) {
+          els[i].classList.add("revealed");
+        }
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        for (var j = 0; j < entries.length; j++) {
+          if (entries[j].isIntersecting) {
+            entries[j].target.classList.add("revealed");
+            observer.unobserve(entries[j].target);
+          }
+        }
+      }, {
+        threshold: 0.15,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      for (var k = 0; k < els.length; k++) {
+        observer.observe(els[k]);
+      }
+    })();
+
+    /* ========================================
+       CTA COMMANDER — Placeholder
+       ======================================== */
+    document.getElementById("nav-cta-commander").addEventListener("click", function () {
+      alert("Commande via Glovo — Lien à venir !");
+    });
+    document.getElementById("hero-cta-commander").addEventListener("click", function () {
+      alert("Commande via Glovo — Lien à venir !");
+    });
+
+  </script>
+
+</body>
+</html>
