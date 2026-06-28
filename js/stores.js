@@ -14,7 +14,8 @@ var stores = [
     open: true,
     lat: 36.858,
     lng: 10.325,
-    glovoUrl: "#"
+    glovoUrl: "#",
+    image: "images/hero_donut.png"
   },
   {
     id: 2,
@@ -24,7 +25,8 @@ var stores = [
     open: true,
     lat: 36.840,
     lng: 10.235,
-    glovoUrl: "#"
+    glovoUrl: "#",
+    image: "images/lifestyle_waffle.png"
   },
   {
     id: 3,
@@ -34,7 +36,8 @@ var stores = [
     open: false,
     lat: 36.862,
     lng: 10.188,
-    glovoUrl: "#"
+    glovoUrl: "#",
+    image: "images/lifestyle_shake.png"
   },
   {
     id: 4,
@@ -44,7 +47,8 @@ var stores = [
     open: true,
     lat: 36.810,
     lng: 10.143,
-    glovoUrl: "#"
+    glovoUrl: "#",
+    image: "images/hero_donut.png"
   },
   {
     id: 5,
@@ -54,7 +58,8 @@ var stores = [
     open: true,
     lat: 35.777,
     lng: 10.832,
-    glovoUrl: "#"
+    glovoUrl: "#",
+    image: "images/lifestyle_waffle.png"
   }
 ];
 
@@ -77,7 +82,7 @@ var markers = [];
   });
 
   /* Tuiles sombres via filtre CSS */
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
     maxZoom: 18
   }).addTo(map);
 
@@ -114,6 +119,24 @@ var markers = [];
         '<span style="color: ' + color + '; font-size: 0.75rem;">' + statusText + ' · ' + s.hours + '</span>' +
       '</div>'
     );
+    
+    // Clic sur marqueur -> afficher image dans la liste
+    marker.on('click', (function(index) {
+      return function() {
+        var storeCards = document.querySelectorAll(".store-card");
+        if (storeCards.length > 0) {
+          for (var k = 0; k < storeCards.length; k++) {
+            storeCards[k].classList.remove("store-card--expanded");
+          }
+          var targetCard = document.querySelector('.store-card[data-store-index="' + index + '"]');
+          if (targetCard) {
+            targetCard.classList.add("store-card--expanded");
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      };
+    })(i));
+
     markers.push(marker);
   }
 })();
@@ -136,7 +159,13 @@ var markers = [];
               '</div>' +
               '<div class="store-card__address">' + s.address + '</div>' +
               '<div class="store-card__hours">' + s.hours + '</div>' +
-              '<a href="' + s.glovoUrl + '" class="store-card__glovo" onclick="if(this.href.endsWith(\'#\')){event.preventDefault();alert(\'Lien Glovo à venir pour ' + s.name.replace(/'/g, "\\'") + '\');}">Commander sur Glovo</a>' +
+              '<div class="store-card__actions">' +
+                '<a href="' + s.glovoUrl + '" class="store-card__glovo" onclick="if(this.href.endsWith(\'#\')){event.preventDefault();alert(\'Lien Glovo à venir pour ' + s.name.replace(/'/g, "\\'") + '\');}">Commander sur Glovo</a>' +
+                '<a href="#" class="store-card__direction" data-lat="' + s.lat + '" data-lng="' + s.lng + '" onclick="event.preventDefault(); window.open(\'https://www.google.com/maps/dir/?api=1&destination=\' + this.getAttribute(\'data-lat\') + \',\' + this.getAttribute(\'data-lng\'), \'_blank\');">Direction</a>' +
+              '</div>' +
+              '<div class="store-card__image-container">' +
+                '<img src="' + s.image + '" alt="' + s.name + '" class="store-card__image" />' +
+              '</div>' +
             '</div>';
   }
   list.innerHTML = html;
@@ -145,7 +174,15 @@ var markers = [];
   var storeCards = document.querySelectorAll(".store-card");
   for (var j = 0; j < storeCards.length; j++) {
     storeCards[j].addEventListener("click", function (e) {
-      if (e.target.closest(".store-card__glovo")) return;
+      if (e.target.closest(".store-card__glovo") || e.target.closest(".store-card__direction")) return;
+      
+      // Réduire toutes les cartes
+      for (var k = 0; k < storeCards.length; k++) {
+        storeCards[k].classList.remove("store-card--expanded");
+      }
+      // Agrandir cette carte
+      this.classList.add("store-card--expanded");
+
       var idx = parseInt(this.getAttribute("data-store-index"));
       var s = stores[idx];
       map.flyTo([s.lat, s.lng], 15, { duration: 1.2 });
@@ -168,19 +205,6 @@ var markers = [];
       var userLat = pos.coords.latitude;
       var userLng = pos.coords.longitude;
 
-      /* Trouver le point de vente le plus proche (distance euclidienne) */
-      var closest = null;
-      var minDist = Infinity;
-      for (var i = 0; i < stores.length; i++) {
-        var dx = stores[i].lat - userLat;
-        var dy = stores[i].lng - userLng;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < minDist) {
-          minDist = dist;
-          closest = i;
-        }
-      }
-
       /* Marqueur utilisateur */
       var userIcon = L.divIcon({
         className: "user-marker",
@@ -196,13 +220,8 @@ var markers = [];
       L.marker([userLat, userLng], { icon: userIcon }).addTo(map)
         .bindPopup('<strong style="color: #4285F4;">Vous êtes ici</strong>');
 
-      /* FlyTo vers le point le plus proche */
-      if (closest !== null) {
-        map.flyTo([stores[closest].lat, stores[closest].lng], 15, { duration: 1.5 });
-        setTimeout(function () {
-          markers[closest].openPopup();
-        }, 1600);
-      }
+      /* FlyTo vers la localisation actuelle */
+      map.flyTo([userLat, userLng], 15, { duration: 1.5 });
     }, function () {
       alert("Impossible d'obtenir votre position. Vérifiez vos paramètres de localisation.");
     });
