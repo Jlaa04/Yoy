@@ -97,21 +97,54 @@
 })();
 
 /* ========================================
-   CTA COMMANDER — Placeholder
+   CTA COMMANDER — Modal Options
    ======================================== */
+function showOrderModal() {
+  var modal = document.getElementById("orderModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "orderModal";
+    modal.className = "order-modal";
+    modal.innerHTML = 
+      '<div class="order-modal__overlay" onclick="document.getElementById(\'orderModal\').style.display=\'none\'"></div>' +
+      '<div class="order-modal__content">' +
+        '<button class="order-modal__close" onclick="document.getElementById(\'orderModal\').style.display=\'none\'">&times;</button>' +
+        '<h3 class="order-modal__title">Choisissez votre boutique</h3>' +
+        '<div class="order-modal__options">' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Monastir - YOYO</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Mrezga - Yoyo</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Yasmine Hammamet - YOYO PREMIUM</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">L\'Aouina - Pâtisserie Yoyo</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Lac 1 - YOYO FOOD</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Sidi Bou Said - YOYO FOOD</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Ariana - Yoyo food</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Le Bardo - YOYO food</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Boumhel - Yoyo Food</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(modal);
+  }
+  modal.style.display = "flex";
+}
+
 (function initCTA() {
   var navCta = document.getElementById("nav-cta-commander");
   var heroCta = document.getElementById("hero-cta-commander");
+  var mobileLink = document.querySelector(".nav__mobile-menu .mobile-link[style*='color: var(--red)']");
 
   if (navCta) {
-    navCta.addEventListener("click", function () {
-      alert("Commande via Glovo — Lien à venir !");
-    });
+    navCta.addEventListener("click", showOrderModal);
   }
   if (heroCta) {
     heroCta.addEventListener("click", function (e) {
       e.stopPropagation(); /* prevent background slider click */
-      alert("Commande via Glovo — Lien à venir !");
+      showOrderModal();
+    });
+  }
+  if (mobileLink) {
+    mobileLink.addEventListener("click", function(e) {
+      e.preventDefault();
+      showOrderModal();
     });
   }
 })();

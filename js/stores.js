@@ -1,158 +1,60 @@
 /* ========================================
-   STORES.JS — Leaflet map, store list, geolocation
+   STORES.JS — Google Maps Embed (iframe), store list
    ======================================== */
 
 /* ========================================
    DONNÉES — BOUTIQUES
    ======================================== */
 var stores = [
-  {
-    id: 1,
-    name: "YOYO Carthage",
-    address: "Avenue Hamilcar, Carthage",
-    hours: "09:00 – 23:00",
-    open: true,
-    lat: 36.858,
-    lng: 10.325,
-    glovoUrl: "#",
-    image: "images/hero_donut.png"
-  },
-  {
-    id: 2,
-    name: "YOYO Lac 1",
-    address: "Les Berges du Lac, Lac 1",
-    hours: "10:00 – 00:00",
-    open: true,
-    lat: 36.840,
-    lng: 10.235,
-    glovoUrl: "#",
-    image: "images/lifestyle_waffle.png"
-  },
-  {
-    id: 3,
-    name: "YOYO Menzah",
-    address: "Cité El Menzah 6, Ariana",
-    hours: "10:00 – 23:30",
-    open: false,
-    lat: 36.862,
-    lng: 10.188,
-    glovoUrl: "#",
-    image: "images/lifestyle_shake.png"
-  },
-  {
-    id: 4,
-    name: "YOYO Bardo",
-    address: "Rue de Bardo, Le Bardo",
-    hours: "09:00 – 22:30",
-    open: true,
-    lat: 36.810,
-    lng: 10.143,
-    glovoUrl: "#",
-    image: "images/hero_donut.png"
-  },
-  {
-    id: 5,
-    name: "YOYO Monastir",
-    address: "Avenue Habib Bourguiba, Monastir",
-    hours: "10:00 – 23:00",
-    open: true,
-    lat: 35.777,
-    lng: 10.832,
-    glovoUrl: "#",
-    image: "images/lifestyle_waffle.png"
-  }
+  { id: 1, name: "Monastir - YOYO", address: "Route de la Falaise, Monastir", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJQa1zMUtzAhMRzWQOdHFLdzM", lat: 35.7725, lng: 10.8250, image: "images/boutiques/monastir.png" },
+  { id: 2, name: "Mrezga - Yoyo", address: "2096 Boulevard de l'Environnement, Mrezga", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJwXN-fs2fAhMRxGBiAarr9MU", lat: 36.4350, lng: 10.7000, image: "images/boutiques/mrezga.png" },
+  { id: 3, name: "Yasmine Hammamet - YOYO PREMIUM", address: "Zone touristique Yasmine Hammamet", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJnXCHks1j_RIRciP3bDGJY-U", lat: 36.3740, lng: 10.5410, image: "images/boutiques/yasmine_hammamet.png" },
+  { id: 4, name: "L'Aouina - Pâtisserie Yoyo", address: "Rue De Parfum, L'Aouina", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJGRKPBJfL4hIReBHfMFzIifU", lat: 36.8440, lng: 10.2330, image: "images/boutiques/laouina.png" },
+  { id: 5, name: "Lac 1 - YOYO FOOD", address: "19 rue Lac Farwa, Les Berges du Lac 1", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJKQyWCgA1_RIRWWJ3FtSdCLk", lat: 36.8370, lng: 10.2450, image: "images/boutiques/lac1.png" },
+  { id: 6, name: "Sidi Bou Said - YOYO FOOD", address: "3 Impasse Bir Sidi Taieb, Carthage", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJ5ePbw4C14hIRKFOcOlP3Zqs", lat: 36.8585, lng: 10.3325, image: "images/boutiques/sidi_bou_said.png" },
+  { id: 7, name: "Ariana - Yoyo food", address: "61 Avenue d'Afrique, Ariana", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJMYXl_58z_RIRTAKnHPpsEF8", lat: 36.8485, lng: 10.1652, image: "images/boutiques/ariana.png", mapQuery: "Yoyo food, El Menzah 5" },
+  { id: 8, name: "Le Bardo - YOYO food", address: "6 Rue Marrakech, Le Bardo", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJOWQ-P6Iz_RIRMnyrC6jMgBw", lat: 36.8132, lng: 10.1339, image: "images/boutiques/le_bardo.png" },
+  { id: 9, name: "Boumhel - Yoyo Food", address: "Boumhel El Bassatine", hours: "10:00 – 23:00", open: true, glovoUrl: "#", placeId: "ChIJSarrQIdJ_RIRD1gHC6gbok0", lat: 36.7340, lng: 10.3110, image: "images/boutiques/boumhel.png" }
 ];
 
 /* ========================================
-   STORE LOCATOR — Carte Leaflet
+   IFRAME — Mise à jour de la carte
    ======================================== */
-var map;
-var markers = [];
+function updateMapIframe(store) {
+  var iframe = document.getElementById("map");
+  if (!iframe) return;
+  /* Utiliser le mapQuery s'il existe, sinon le nom + adresse pour que Google Maps trouve l'établissement exact */
+  var query = store.mapQuery || (store.name + ", " + store.address + ", Tunisie");
+  iframe.src = "https://maps.google.com/maps?q=" + encodeURIComponent(query) + "&output=embed&z=17";
+}
 
-(function initMap() {
-  var mapEl = document.getElementById("map");
-  if (!mapEl) return;
+function showAllStores() {
+  var iframe = document.getElementById("map");
+  if (!iframe) return;
+  iframe.src = "https://maps.google.com/maps?q=YOYO+food+Tunisie&output=embed&z=7";
+}
 
-  /* Centre sur la Tunisie */
-  map = L.map("map", {
-    center: [36.84, 10.22],
-    zoom: 11,
-    zoomControl: true,
-    attributionControl: false
-  });
-
-  /* Tuiles sombres via filtre CSS */
-  L.tileLayer("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png", {
-    maxZoom: 18
-  }).addTo(map);
-
-  /* Appliquer le filtre sombre aux tuiles */
-  var tilePane = map.getPane("tilePane");
-  if (tilePane) {
-    tilePane.style.filter = "invert(1) hue-rotate(180deg) brightness(0.85) saturate(0.5)";
-  }
-
-  /* Marqueurs custom */
-  for (var i = 0; i < stores.length; i++) {
-    var s = stores[i];
-    var color = s.open ? "#06D6A0" : "#E8001D";
-    var statusText = s.open ? "Ouvert" : "Fermé";
-
-    var icon = L.divIcon({
-      className: "custom-marker",
-      html: '<div style="' +
-              'width: 18px; height: 18px; border-radius: 50%;' +
-              'background: ' + color + ';' +
-              'border: 3px solid #080808;' +
-              'box-shadow: 0 0 12px ' + color + '60;' +
-            '"></div>',
-      iconSize: [18, 18],
-      iconAnchor: [9, 9],
-      popupAnchor: [0, -14]
-    });
-
-    var marker = L.marker([s.lat, s.lng], { icon: icon }).addTo(map);
-    marker.bindPopup(
-      '<div style="text-align:center;">' +
-        '<strong style="color: #FFD600;">' + s.name + '</strong><br/>' +
-        '<span style="color: #aaa; font-size: 0.8rem; text-transform: none; letter-spacing: 0;">' + s.address + '</span><br/>' +
-        '<span style="color: ' + color + '; font-size: 0.75rem;">' + statusText + ' · ' + s.hours + '</span>' +
-      '</div>'
-    );
-    
-    // Clic sur marqueur -> afficher image dans la liste
-    marker.on('click', (function(index) {
-      return function() {
-        var storeCards = document.querySelectorAll(".store-card");
-        if (storeCards.length > 0) {
-          for (var k = 0; k < storeCards.length; k++) {
-            storeCards[k].classList.remove("store-card--expanded");
-          }
-          var targetCard = document.querySelector('.store-card[data-store-index="' + index + '"]');
-          if (targetCard) {
-            targetCard.classList.add("store-card--expanded");
-            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }
-      };
-    })(i));
-
-    markers.push(marker);
-  }
-})();
-
-/* Store List — Rendu */
+/* ========================================
+   STORE LIST — Rendu
+   ======================================== */
 (function initStoreList() {
   var list = document.getElementById("storesList");
   if (!list) return;
+
+  /* Afficher la vue globale par défaut */
+  showAllStores();
 
   var html = "";
   for (var i = 0; i < stores.length; i++) {
     var s = stores[i];
     var statusClass = s.open ? "store-card__status--open" : "store-card__status--closed";
     var statusLabel = s.open ? "Ouvert" : "Fermé";
+    var mapsLink = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(s.name + " " + s.address) + "&query_place_id=" + s.placeId;
 
     html += '<div class="store-card" data-store-index="' + i + '">' +
+              '<div class="store-card__image-container">' +
+                '<img src="' + s.image + '" alt="' + s.name + '" class="store-card__image" onerror="this.src=\'images/hours_store.png\'">' +
+              '</div>' +
               '<div class="store-card__header">' +
                 '<span class="store-card__name">' + s.name + '</span>' +
                 '<span class="store-card__status ' + statusClass + '">' + statusLabel + '</span>' +
@@ -161,68 +63,82 @@ var markers = [];
               '<div class="store-card__hours">' + s.hours + '</div>' +
               '<div class="store-card__actions">' +
                 '<a href="' + s.glovoUrl + '" class="store-card__glovo" onclick="if(this.href.endsWith(\'#\')){event.preventDefault();alert(\'Lien Glovo à venir pour ' + s.name.replace(/'/g, "\\'") + '\');}">Commander sur Glovo</a>' +
-                '<a href="#" class="store-card__direction" data-lat="' + s.lat + '" data-lng="' + s.lng + '" onclick="event.preventDefault(); window.open(\'https://www.google.com/maps/dir/?api=1&destination=\' + this.getAttribute(\'data-lat\') + \',\' + this.getAttribute(\'data-lng\'), \'_blank\');">Direction</a>' +
-              '</div>' +
-              '<div class="store-card__image-container">' +
-                '<img src="' + s.image + '" alt="' + s.name + '" class="store-card__image" />' +
               '</div>' +
             '</div>';
   }
   list.innerHTML = html;
 
-  /* Clic sur carte boutique → flyTo */
+  /* Clic sur carte boutique → mise à jour iframe */
   var storeCards = document.querySelectorAll(".store-card");
   for (var j = 0; j < storeCards.length; j++) {
-    storeCards[j].addEventListener("click", function (e) {
+    storeCards[j].addEventListener("click", function(e) {
       if (e.target.closest(".store-card__glovo") || e.target.closest(".store-card__direction")) return;
-      
-      // Réduire toutes les cartes
+
+      /* Réduire toutes les cartes */
       for (var k = 0; k < storeCards.length; k++) {
         storeCards[k].classList.remove("store-card--expanded");
       }
-      // Agrandir cette carte
+      /* Agrandir cette carte */
       this.classList.add("store-card--expanded");
 
       var idx = parseInt(this.getAttribute("data-store-index"));
       var s = stores[idx];
-      map.flyTo([s.lat, s.lng], 15, { duration: 1.2 });
-      markers[idx].openPopup();
+
+      /* Mettre à jour l'iframe pour afficher cette boutique */
+      updateMapIframe(s);
     });
   }
 })();
 
-/* Géolocalisation */
+/* ========================================
+   GÉOLOCALISATION
+   ======================================== */
 (function initGeolocation() {
   var locateBtn = document.getElementById("locateBtn");
   if (!locateBtn) return;
 
-  locateBtn.addEventListener("click", function () {
+  locateBtn.addEventListener("click", function() {
     if (!navigator.geolocation) {
       alert("La géolocalisation n'est pas supportée par votre navigateur.");
       return;
     }
-    navigator.geolocation.getCurrentPosition(function (pos) {
+
+    navigator.geolocation.getCurrentPosition(function(pos) {
       var userLat = pos.coords.latitude;
       var userLng = pos.coords.longitude;
 
-      /* Marqueur utilisateur */
-      var userIcon = L.divIcon({
-        className: "user-marker",
-        html: '<div style="' +
-                'width: 14px; height: 14px; border-radius: 50%;' +
-                'background: #4285F4;' +
-                'border: 3px solid #fff;' +
-                'box-shadow: 0 0 16px rgba(66,133,244,0.5);' +
-              '"></div>',
-        iconSize: [14, 14],
-        iconAnchor: [7, 7]
-      });
-      L.marker([userLat, userLng], { icon: userIcon }).addTo(map)
-        .bindPopup('<strong style="color: #4285F4;">Vous êtes ici</strong>');
+      /* Trouver la boutique la plus proche */
+      var nearest = null;
+      var minDist = Infinity;
+      for (var i = 0; i < stores.length; i++) {
+        var d = Math.sqrt(
+          Math.pow(stores[i].lat - userLat, 2) +
+          Math.pow(stores[i].lng - userLng, 2)
+        );
+        if (d < minDist) {
+          minDist = d;
+          nearest = i;
+        }
+      }
 
-      /* FlyTo vers la localisation actuelle */
-      map.flyTo([userLat, userLng], 15, { duration: 1.5 });
-    }, function () {
+      if (nearest !== null) {
+        var s = stores[nearest];
+        /* Afficher la boutique la plus proche sur la carte */
+        updateMapIframe(s);
+
+        /* Mettre en surbrillance la carte */
+        var storeCards = document.querySelectorAll(".store-card");
+        for (var k = 0; k < storeCards.length; k++) {
+          storeCards[k].classList.remove("store-card--expanded");
+        }
+        var targetCard = document.querySelector('.store-card[data-store-index="' + nearest + '"]');
+        if (targetCard) {
+          targetCard.classList.add("store-card--expanded");
+          targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+
+    }, function() {
       alert("Impossible d'obtenir votre position. Vérifiez vos paramètres de localisation.");
     });
   });

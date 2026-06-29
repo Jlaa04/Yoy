@@ -780,6 +780,44 @@ button, input, select, textarea {
   border-color: var(--yellow);
 }
 
+.menu__boutique-tab {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--white);
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu__boutique-tab:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.menu__boutique-tab.active {
+  background: var(--red);
+  color: #FFFFFF;
+  border-color: var(--red);
+  box-shadow: 0 4px 15px rgba(232, 0, 29, 0.3);
+}
+
+[data-theme="light"] .menu__boutique-tab {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #1A1A1A;
+}
+
+[data-theme="light"] .menu__boutique-tab:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
 /* Product Grid */
 .menu__grid {
   display: grid;
@@ -1067,7 +1105,7 @@ button, input, select, textarea {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease;
+  transition: max-height 0.4s ease, opacity 0.4s ease, margin-bottom 0.4s ease;
   border-radius: 8px;
 }
 
@@ -1079,7 +1117,7 @@ button, input, select, textarea {
 .store-card--expanded .store-card__image-container {
   max-height: 300px;
   opacity: 1;
-  margin-top: 12px;
+  margin-bottom: 12px;
 }
 
 .store-card__image {
@@ -1185,6 +1223,10 @@ button, input, select, textarea {
   line-height: 1.05;
 }
 
+[data-theme="light"] .brand-hero__title {
+  color: #FFFFFF;
+}
+
 .brand-hero__title .yoyo-brand-logo {
   font-family: 'Fredoka', sans-serif;
   font-weight: 700;
@@ -1209,6 +1251,10 @@ button, input, select, textarea {
   line-height: 1.7;
   max-width: 600px;
   margin: 0 auto;
+}
+
+[data-theme="light"] .brand-hero__subtitle {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* ========================================
@@ -2133,10 +2179,25 @@ button, input, select, textarea {
   opacity: 1;
 }
 
+/* Social media brand colors on hover */
+.instagram-card[data-social="instagram"] .instagram-card__overlay {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+.instagram-card[data-social="facebook"] .instagram-card__overlay {
+  background: rgba(24, 119, 242, 0.9);
+}
+.instagram-card[data-social="tiktok"] .instagram-card__overlay {
+  background: rgba(0, 0, 0, 0.9);
+}
+.instagram-card[data-social="youtube"] .instagram-card__overlay {
+  background: rgba(255, 0, 0, 0.9);
+}
+
 .instagram-card__icon {
   width: 24px;
   height: 24px;
-  fill: var(--white);
+  fill: #ffffff;
+  color: #ffffff;
 }
 
 /* SVG icons custom styles */
@@ -2535,3 +2596,133 @@ button, input, select, textarea {
 }
 
 
+
+/* ========================================
+   ORDER MODAL (COMMANDER)
+   ======================================== */
+.order-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+}
+
+.order-modal__content {
+  position: relative;
+  background: var(--black-card);
+  padding: 40px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  z-index: 10;
+  border: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+[data-theme="light"] .order-modal__content {
+  background: #FFFFFF;
+}
+
+.order-modal__close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--gray);
+  transition: color 0.3s;
+}
+
+.order-modal__close:hover {
+  color: var(--red);
+}
+
+.order-modal__title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  color: var(--yellow);
+}
+
+.order-modal__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-modal__btn {
+  width: 100%;
+}
+
+[data-theme="light"] .order-modal__btn {
+  color: #1A1A1A;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+[data-theme="light"] .order-modal__btn:hover {
+  background: var(--yellow);
+  color: #000;
+  border-color: var(--yellow);
+}
+
+/* ========================================
+   MENU BOUTIQUE SELECTOR
+   ======================================== */
+.menu__boutique-selector {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.menu__boutique-tab {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  color: var(--white);
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu__boutique-tab:hover {
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+.menu__boutique-tab.active {
+  background: var(--yellow);
+  color: #080808;
+  border-color: var(--yellow);
+}
+
+[data-theme="light"] .menu__boutique-tab {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: #1A1A1A;
+}
+
+[data-theme="light"] .menu__boutique-tab:hover {
+  border-color: var(--yellow);
+  color: #080808;
+}

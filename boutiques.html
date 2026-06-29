@@ -11,8 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800;900&family=Fredoka:wght@700&display=swap" rel="stylesheet" />
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Google Maps Embed (iframe) -->
 
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css" />
@@ -93,8 +92,15 @@
     </div>
     <div class="stores__layout reveal">
       <div class="stores__map-container">
-        <div id="map"></div>
-        <button class="stores__locate-btn" id="locateBtn">Me localiser automatiquement</button>
+        <iframe
+          id="map"
+          src="https://maps.google.com/maps?q=YOYO+food+Tunisie&output=embed&z=7"
+          style="width:100%; height:100%; border:0; border-radius:16px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <button class="stores__locate-btn" id="locateBtn">Boutique la plus proche</button>
       </div>
       <div class="stores__list" id="storesList">
         <!-- Cartes boutique injectées en JS -->
@@ -147,9 +153,6 @@
       <span class="footer__made">Made with passion in Tunisia</span>
     </div>
   </footer>
-
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <!-- JS -->
   <script src="js/main.js"></script>
