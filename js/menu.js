@@ -124,26 +124,6 @@ var products = [
     "categoryLabel": "Partie Sucré"
   },
   {
-    "id": 4,
-    "name": "Crêpe Dubai",
-    "desc": "Chocolat, kunefa, pistache",
-    "price": "24.500 DT",
-    "category": "partie-sucre",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Partie Sucré"
-  },
-  {
     "id": 5,
     "name": "Fondant Yoyo",
     "desc": "Fondant chocolat, crème chocolat, fruit sec",
@@ -161,26 +141,6 @@ var products = [
       "boumhel"
     ],
     "image": "images/products/fondant_yoyo.png",
-    "categoryLabel": "Partie Sucré"
-  },
-  {
-    "id": 6,
-    "name": "JOUBNA DUBAI",
-    "desc": "",
-    "price": "18.500 DT",
-    "category": "partie-sucre",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
     "categoryLabel": "Partie Sucré"
   },
   {
@@ -223,13 +183,12 @@ var products = [
     "image": "images/products/cake_dubai.png",
     "categoryLabel": "Partie Sucré"
   },
-
   {
     "id": 12,
-    "name": "PLATEAU PIZZA BACON",
-    "desc": "SAUCE TOMATE FRAICHE , MOZZARELLA,BACON,ROQUETTE,MOZZARELLINI,PARMESAN,SAUCE BALSAMIQUE",
+    "name": "Pizza Bacon",
+    "desc": "Sauce tomate fraîche, mozzarella, bacon, roquette, mozzarellini, parmesan, sauce balsamique",
     "price": "99.000 DT",
-    "category": "plateau-pizza",
+    "category": "pizza",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -242,14 +201,14 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Plateau Pizza"
+    "categoryLabel": "Pizza"
   },
   {
     "id": 13,
-    "name": "PLATEAU PIZZA POULET CITRON CONFIT",
-    "desc": "SAUCE TOMATE FRAICHE , MOZZARELLA , ESCALOPE DE POULET , CITRONT CONFIT,PIMMENT DE CAYENNE ,PARMESAN",
+    "name": "Pizza Poulet Citron Confit",
+    "desc": "Sauce tomate fraîche, mozzarella, escalope de poulet, citron confit, piment de cayenne, parmesan",
     "price": "85.000 DT",
-    "category": "plateau-pizza",
+    "category": "pizza",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -262,14 +221,14 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Plateau Pizza"
+    "categoryLabel": "Pizza"
   },
   {
     "id": 14,
-    "name": "PLATEAU PIZZA PEPPERONI",
-    "desc": "SAUCE TOMATE FRAICHE , MOZZARELLA ,PEPPERONI,PARMESAN",
+    "name": "Pizza Pepperoni",
+    "desc": "Sauce tomate fraîche, mozzarella, pepperoni, parmesan",
     "price": "90.000 DT",
-    "category": "plateau-pizza",
+    "category": "pizza",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -282,14 +241,14 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Plateau Pizza"
+    "categoryLabel": "Pizza"
   },
   {
     "id": 15,
-    "name": "PLATEAU PIZZA THON FROMAGE",
-    "desc": "SAUCE TOMATE FRAICHE , MOZZARELLA , THON , TOMATE FRAICHE, OLIVE,PERSIL HUILE D'OLIVE",
+    "name": "Pizza Thon Fromage",
+    "desc": "Sauce tomate fraîche, mozzarella, thon, tomate fraîche, olive, persil, huile d'olive",
     "price": "85.000 DT",
-    "category": "plateau-pizza",
+    "category": "pizza",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -302,14 +261,14 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Plateau Pizza"
+    "categoryLabel": "Pizza"
   },
   {
     "id": 16,
-    "name": "PLATEAU PIZZA 5 FROMAGES",
-    "desc": "SAUCE FROMAGERE ,MOZZARELLA ,GROGONZOLLA, GRUYERE,PARMESAN,MOZZARELLINI",
+    "name": "Pizza 5 Fromages",
+    "desc": "Sauce fromagère, mozzarella, gorgonzola, gruyère, parmesan, mozzarellini",
     "price": "97.000 DT",
-    "category": "plateau-pizza",
+    "category": "pizza",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -322,133 +281,13 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Plateau Pizza"
-  },
-  {
-    "id": 17,
-    "name": "TRANCHE PIZZA THON FROMAGE",
-    "desc": "",
-    "price": "10.500 DT",
-    "category": "pizza-tranche",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Pizza Tranche"
-  },
-  {
-    "id": 18,
-    "name": "TRANCHE PIZZA PEPPERONI",
-    "desc": "",
-    "price": "11.000 DT",
-    "category": "pizza-tranche",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Pizza Tranche"
-  },
-  {
-    "id": 19,
-    "name": "TRANCHE PIZZA POULET CITRON CONFIT",
-    "desc": "",
-    "price": "10.500 DT",
-    "category": "pizza-tranche",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Pizza Tranche"
-  },
-  {
-    "id": 20,
-    "name": "TRANCHE PIZZA BACON",
-    "desc": "",
-    "price": "11.000 DT",
-    "category": "pizza-tranche",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Pizza Tranche"
-  },
-  {
-    "id": 21,
-    "name": "TRANCHE PIZZA 5 FROMAGES",
-    "desc": "",
-    "price": "11.000 DT",
-    "category": "pizza-tranche",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Pizza Tranche"
+    "categoryLabel": "Pizza"
   },
   {
     "id": 22,
     "name": "Bowl Chicken",
     "desc": "Mayonnaise, sauce algérienne, ketchup, mozzarella, oignon, poulet, frites",
     "price": "23.500 DT",
-    "category": "partie-sale",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Partie Salé"
-  },
-  {
-    "id": 23,
-    "name": "Tebayo's Beef",
-    "desc": "Mayonnaise, sauce algérienne, ketchup, mozzarella, oignon, viande haché, frites",
-    "price": "22.000 DT",
     "category": "partie-sale",
     "boutiques": [
       "monastir",
@@ -509,26 +348,6 @@ var products = [
     "name": "Bowl Boeuf",
     "desc": "Mayonnaise, sauce algérienne, ketchup, mozzarella, oignon, viande haché, frites",
     "price": "29.500 DT",
-    "category": "partie-sale",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Partie Salé"
-  },
-  {
-    "id": 27,
-    "name": "Tebayo's Chicken",
-    "desc": "Mayonnaise, sauce algérienne, ketchup, mozzarella, oignon, poulet, frites",
-    "price": "21.000 DT",
     "category": "partie-sale",
     "boutiques": [
       "monastir",
@@ -622,7 +441,7 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Créme Yoyo"
+    "categoryLabel": "Crème Yoyo"
   },
   {
     "id": 32,
@@ -642,27 +461,7 @@ var products = [
       "boumhel"
     ],
     "image": "images/products/creme_ferrero.png",
-    "categoryLabel": "Créme Yoyo"
-  },
-  {
-    "id": 33,
-    "name": "CREME ELISSA",
-    "desc": "",
-    "price": "17.500 DT",
-    "category": "creme-yoyo",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Créme Yoyo"
+    "categoryLabel": "Crème Yoyo"
   },
   {
     "id": 34,
@@ -682,7 +481,7 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Créme Yoyo"
+    "categoryLabel": "Crème Yoyo"
   },
   {
     "id": 35,
@@ -702,554 +501,14 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Créme Yoyo"
-  },
-  {
-    "id": 36,
-    "name": "CREME BAKLAWA",
-    "desc": "",
-    "price": "17.500 DT",
-    "category": "creme-yoyo",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Créme Yoyo"
-  },
-  {
-    "id": 37,
-    "name": "PANUOZZO Poulet Crunchy",
-    "desc": "AVEC MOZZARELLA ET FRITES",
-    "price": "22.000 DT",
-    "category": "panuozzo",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Panuozzo"
-  },
-  {
-    "id": 38,
-    "name": "PANUOZZO Pepperoni",
-    "desc": "AVEC MOZZARELLA ET FRIRES",
-    "price": "23.000 DT",
-    "category": "panuozzo",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Panuozzo"
-  },
-  {
-    "id": 39,
-    "name": "PANUOZZO Le Tunisien",
-    "desc": "AVEC MOZZARELLA ET FRITES",
-    "price": "18.500 DT",
-    "category": "panuozzo",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Panuozzo"
-  },
-  {
-    "id": 40,
-    "name": "PANUOZZO Au Poulet Mariné",
-    "desc": "AVEC MOZZARELLA ET FRITES",
-    "price": "21.500 DT",
-    "category": "panuozzo",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Panuozzo"
-  },
-  {
-    "id": 41,
-    "name": "PANUOZZO Bœuf Fondant",
-    "desc": "AVEC SAUCE FROMAGE , MOZZARELLA ET FRITES",
-    "price": "24.000 DT",
-    "category": "panuozzo",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Panuozzo"
-  },
-  {
-    "id": 42,
-    "name": "Petit Déjeuner Le Duo",
-    "desc": "Assiette charcuterie, fromages, omelette, boules gaufres 3 tartines , 2 jus d'orange, 2 cafés au choix, eau minérale 1L, 2 œufs au plat",
-    "price": "44.500 DT",
-    "category": "petit-dejeuner",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Petit Déjeuner"
-  },
-  {
-    "id": 43,
-    "name": "Petit Déjeuner Fast",
-    "desc": "Croissant farcie ou omelette ou boules gaufres ou croissant salée , jus d'orange, café au choix",
-    "price": "14.500 DT",
-    "category": "petit-dejeuner",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Petit Déjeuner"
-  },
-  {
-    "id": 44,
-    "name": "Citronnade",
-    "desc": "Jus frais",
-    "price": "8.000 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "images/products/citronnade.png",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 45,
-    "name": "Jus De Pomme Et Kiwi",
-    "desc": "Pomme, kiwi",
-    "price": "11.500 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 46,
-    "name": "Yoyo",
-    "desc": "Jus cocktail",
-    "price": "16.500 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 47,
-    "name": "Jus De Banane",
-    "desc": "Banane",
-    "price": "14.000 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 48,
-    "name": "Bombe Yoyo",
-    "desc": "Jus de banane, datte, fruit sec, pomme",
-    "price": "20.000 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 49,
-    "name": "Jus De Fraise",
-    "desc": "Fraise",
-    "price": "7.500 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 50,
-    "name": "Jus D'ananas",
-    "desc": "Ananas",
-    "price": "15.000 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 51,
-    "name": "Jus D'orange",
-    "desc": "Orange",
-    "price": "7.000 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 52,
-    "name": "Citronnade Avec Menthe",
-    "desc": "Citron, menthe",
-    "price": "6.000 DT",
-    "category": "yoyo-frutti-juice",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Yoyo Frutti Juice"
-  },
-  {
-    "id": 53,
-    "name": "1/2 PLATEAU PIZZA POULET CITRON CONFIT",
-    "desc": "",
-    "price": "45.000 DT",
-    "category": "demi-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/2 Plateau Pizza"
-  },
-  {
-    "id": 54,
-    "name": "1/2 PLATEAU PIZZA 5 FROMAGES",
-    "desc": "",
-    "price": "55.000 DT",
-    "category": "demi-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/2 Plateau Pizza"
-  },
-  {
-    "id": 55,
-    "name": "1/2 PLATEAU PIZZA BACON",
-    "desc": "",
-    "price": "50.000 DT",
-    "category": "demi-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/2 Plateau Pizza"
-  },
-  {
-    "id": 56,
-    "name": "1/2 PLATEAU PIZZA THON FROMAGE",
-    "desc": "",
-    "price": "45.000 DT",
-    "category": "demi-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/2 Plateau Pizza"
-  },
-  {
-    "id": 57,
-    "name": "1/2 PLATEAU PIZZA PEPPERONI",
-    "desc": "",
-    "price": "50.000 DT",
-    "category": "demi-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/2 Plateau Pizza"
-  },
-  {
-    "id": 58,
-    "name": "1/4 PLATEAU PIZZA POULET CITRON CONFIT",
-    "desc": "",
-    "price": "25.000 DT",
-    "category": "quart-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/4 Plateau Pizza"
-  },
-  {
-    "id": 59,
-    "name": "1/4 PLATEAU PIZZA THON FROMAGE",
-    "desc": "",
-    "price": "25.000 DT",
-    "category": "quart-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/4 Plateau Pizza"
-  },
-  {
-    "id": 60,
-    "name": "1/4 PLATEAU PIZZA PEPPERONI",
-    "desc": "",
-    "price": "26.000 DT",
-    "category": "quart-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/4 Plateau Pizza"
-  },
-  {
-    "id": 61,
-    "name": "1/4 PLATEAU PIZZA BACON",
-    "desc": "",
-    "price": "26.000 DT",
-    "category": "quart-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/4 Plateau Pizza"
-  },
-  {
-    "id": 62,
-    "name": "1/4 PLATEAU PIZZA 5 FROMAGES",
-    "desc": "",
-    "price": "28.000 DT",
-    "category": "quart-plateau-pizza",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "1/4 Plateau Pizza"
+    "categoryLabel": "Crème Yoyo"
   },
   {
     "id": 63,
     "name": "Classic Beef",
     "desc": "Laitue, tomate, oignon, mayonnaise, ketchup, frites",
     "price": "19.500 DT",
-        "category": "burger",
+    "category": "burger",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1269,7 +528,7 @@ var products = [
     "name": "Classic Chicken",
     "desc": "Laitue, tomate, oignon, mayonnaise, ketchup, frites",
     "price": "18.500 DT",
-        "category": "burger",
+    "category": "burger",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1289,7 +548,7 @@ var products = [
     "name": "Smoky Beef",
     "desc": "Laitue, tomate, oignon, mayonnaise, ketchup, frites",
     "price": "24.500 DT",
-        "category": "burger",
+    "category": "burger",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1309,7 +568,7 @@ var products = [
     "name": "Américain Burger",
     "desc": "Laitue, tomate, oignon, mayonnaise, ketchup, frites",
     "price": "23.500 DT",
-        "category": "burger",
+    "category": "burger",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1325,11 +584,11 @@ var products = [
     "categoryLabel": "Burger"
   },
   {
-    "id": 67,
-    "name": "Mexician Spicy",
-    "desc": "Laitue, tomate, oignon, mayonnaise, ketchup, frites",
-    "price": "21.000 DT",
-        "category": "burger",
+    "id": 44,
+    "name": "Citronnade",
+    "desc": "Jus frais",
+    "price": "8.000 DT",
+    "category": "boissons",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1341,35 +600,15 @@ var products = [
       "le-bardo",
       "boumhel"
     ],
-    "image": "images/products/burger.png",
-    "categoryLabel": "Burger"
+    "image": "images/products/citronnade.png",
+    "categoryLabel": "Boissons"
   },
   {
-    "id": 68,
-    "name": "Smoky Chicken",
-    "desc": "Laitue, tomate, oignon, mayonnaise, ketchup, frites",
-    "price": "23.500 DT",
-        "category": "burger",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "images/products/burger.png",
-    "categoryLabel": "Burger"
-  },
-  {
-    "id": 69,
-    "name": "Mojito Pinacolada",
-    "desc": "Pinacolada",
-    "price": "15.500 DT",
-    "category": "mojito",
+    "id": 46,
+    "name": "Yoyo Cocktail",
+    "desc": "Jus cocktail",
+    "price": "16.500 DT",
+    "category": "boissons",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1382,14 +621,54 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Mojito"
+    "categoryLabel": "Boissons"
+  },
+  {
+    "id": 48,
+    "name": "Bombe Yoyo",
+    "desc": "Jus de banane, datte, fruit sec, pomme",
+    "price": "20.000 DT",
+    "category": "boissons",
+    "boutiques": [
+      "monastir",
+      "mrezga",
+      "yasmine-hammamet",
+      "laouina",
+      "lac-1",
+      "carthage",
+      "ariana",
+      "le-bardo",
+      "boumhel"
+    ],
+    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
+    "categoryLabel": "Boissons"
+  },
+  {
+    "id": 51,
+    "name": "Jus D'orange",
+    "desc": "Orange",
+    "price": "7.000 DT",
+    "category": "boissons",
+    "boutiques": [
+      "monastir",
+      "mrezga",
+      "yasmine-hammamet",
+      "laouina",
+      "lac-1",
+      "carthage",
+      "ariana",
+      "le-bardo",
+      "boumhel"
+    ],
+    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
+    "categoryLabel": "Boissons"
   },
   {
     "id": 70,
     "name": "Mojito Red",
     "desc": "Mojito",
     "price": "9.000 DT",
-    "category": "mojito",
+    "category": "boissons",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1402,154 +681,14 @@ var products = [
       "boumhel"
     ],
     "image": "images/products/mojito_red.png",
-    "categoryLabel": "Mojito"
-  },
-  {
-    "id": 71,
-    "name": "Mojito Neutre",
-    "desc": "Neutre",
-    "price": "13.500 DT",
-    "category": "mojito",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Mojito"
-  },
-  {
-    "id": 72,
-    "name": "Mojito Pêche",
-    "desc": "Pêche",
-    "price": "15.500 DT",
-    "category": "mojito",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Mojito"
-  },
-  {
-    "id": 73,
-    "name": "Mojito Energy",
-    "desc": "Energy",
-    "price": "18.500 DT",
-    "category": "mojito",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Mojito"
-  },
-  {
-    "id": 74,
-    "name": "Mojito Blue",
-    "desc": "Blue",
-    "price": "15.500 DT",
-    "category": "mojito",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Mojito"
-  },
-  {
-    "id": 75,
-    "name": "Mojito Green",
-    "desc": "Green",
-    "price": "15.500 DT",
-    "category": "mojito",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Mojito"
-  },
-  {
-    "id": 76,
-    "name": "COCA ZERO CANETTE 24CL",
-    "desc": "",
-    "price": "3.500 DT",
-    "category": "boisson",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Boisson"
-  },
-  {
-    "id": 77,
-    "name": "Boga - Cidre ( 24Cl ) Canette",
-    "desc": "Boisson gazeuse",
-    "price": "3.500 DT",
-    "category": "boisson",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Boisson"
+    "categoryLabel": "Boissons"
   },
   {
     "id": 78,
-    "name": "Coca Cola - Classique ( 24Cl ) Canette",
+    "name": "Coca Cola Canette 24Cl",
     "desc": "Boisson gazeuse",
     "price": "3.500 DT",
-    "category": "boisson",
+    "category": "boissons",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1562,54 +701,14 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Boisson"
-  },
-  {
-    "id": 79,
-    "name": "Fanta - Orange ( 24Cl ) Canette",
-    "desc": "Boisson gazeuse",
-    "price": "3.500 DT",
-    "category": "boisson",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Boisson"
-  },
-  {
-    "id": 80,
-    "name": "Boga - Lim ( 24Cl ) Canette",
-    "desc": "Boisson gazeuse",
-    "price": "3.500 DT",
-    "category": "boisson",
-    "boutiques": [
-      "monastir",
-      "mrezga",
-      "yasmine-hammamet",
-      "laouina",
-      "lac-1",
-      "carthage",
-      "ariana",
-      "le-bardo",
-      "boumhel"
-    ],
-    "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Boisson"
+    "categoryLabel": "Boissons"
   },
   {
     "id": 81,
     "name": "Eau Minérale 0.5 L",
     "desc": "Eau Minérale",
     "price": "2.500 DT",
-    "category": "boisson",
+    "category": "boissons",
     "boutiques": [
       "monastir",
       "mrezga",
@@ -1622,7 +721,7 @@ var products = [
       "boumhel"
     ],
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?q=80&w=400&auto=format&fit=crop",
-    "categoryLabel": "Boisson"
+    "categoryLabel": "Boissons"
   },
 ];
 

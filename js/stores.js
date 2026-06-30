@@ -58,9 +58,6 @@ function showAllStores() {
               '</div>' +
               '<div class="store-card__address">' + s.address + '</div>' +
               '<div class="store-card__hours">' + s.hours + '</div>' +
-              '<div class="store-card__actions">' +
-                '<a href="' + s.glovoUrl + '" class="store-card__glovo" onclick="if(this.href.endsWith(\'#\')){event.preventDefault();alert(\'Lien Glovo à venir pour ' + s.name.replace(/'/g, "\\'") + '\');}">Commander sur Glovo</a>' +
-              '</div>' +
             '</div>';
   }
   list.innerHTML = html;
