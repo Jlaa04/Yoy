@@ -97,8 +97,20 @@
 })();
 
 /* ========================================
-   CTA COMMANDER — Modal Options
+   CTA COMMANDER — Modal Options & Geolocation
    ======================================== */
+var YOYO_STORES = [
+  { name: "Monastir - YOYO", lat: 35.7725, lng: 10.8250, url: "https://www.glovoapp.com/" },
+  { name: "Mrezga - Yoyo", lat: 36.4350, lng: 10.7000, url: "https://www.glovoapp.com/" },
+  { name: "Yasmine Hammamet - YOYO PREMIUM", lat: 36.3740, lng: 10.5410, url: "https://glovoapp.com/en/tn/nabeul-hammamet/stores/yoyo-food-hammamet-nbl" },
+  { name: "L'Aouina - Pâtisserie Yoyo", lat: 36.8440, lng: 10.2330, url: "https://www.glovoapp.com/" },
+  { name: "Lac 1 - YOYO FOOD", lat: 36.8370, lng: 10.2450, url: "https://www.glovoapp.com/" },
+  { name: "Sidi Bou Said - YOYO FOOD", lat: 36.8585, lng: 10.3325, url: "https://glovoapp.com/en/tn/tunis/stores/yoyo-tis" },
+  { name: "Ariana - Yoyo food", lat: 36.8485, lng: 10.1652, url: "https://www.glovoapp.com/" },
+  { name: "Le Bardo - YOYO food", lat: 36.8132, lng: 10.1339, url: "https://www.glovoapp.com/" },
+  { name: "Boumhel - Yoyo Food", lat: 36.7340, lng: 10.3110, url: "https://glovoapp.com/en/tn/tunis/stores/yoyo-food-boumhal-tis" }
+];
+
 function showOrderModal() {
   var modal = document.getElementById("orderModal");
   if (!modal) {
@@ -113,18 +125,58 @@ function showOrderModal() {
         '<div class="order-modal__options">' +
           '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Monastir - YOYO</button>' +
           '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Mrezga - Yoyo</button>' +
-          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Yasmine Hammamet - YOYO PREMIUM</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://glovoapp.com/en/tn/nabeul-hammamet/stores/yoyo-food-hammamet-nbl\', \'_blank\')">Yasmine Hammamet - YOYO PREMIUM</button>' +
           '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">L\'Aouina - Pâtisserie Yoyo</button>' +
           '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Lac 1 - YOYO FOOD</button>' +
-          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Sidi Bou Said - YOYO FOOD</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://glovoapp.com/en/tn/tunis/stores/yoyo-tis\', \'_blank\')">Sidi Bou Said - YOYO FOOD</button>' +
           '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Ariana - Yoyo food</button>' +
           '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Le Bardo - YOYO food</button>' +
-          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://www.glovoapp.com/\', \'_blank\')">Boumhel - Yoyo Food</button>' +
+          '<button class="btn-outline order-modal__btn" onclick="window.open(\'https://glovoapp.com/en/tn/tunis/stores/yoyo-food-boumhal-tis\', \'_blank\')">Boumhel - Yoyo Food</button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(modal);
   }
   modal.style.display = "flex";
+}
+
+function handleOrderClick() {
+  if (!navigator.geolocation) {
+    showOrderModal();
+    return;
+  }
+
+  // Change cursor to indicate loading if desired
+  document.body.style.cursor = 'wait';
+
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    document.body.style.cursor = 'default';
+    var userLat = pos.coords.latitude;
+    var userLng = pos.coords.longitude;
+    var nearest = null;
+    var minDist = Infinity;
+
+    for (var i = 0; i < YOYO_STORES.length; i++) {
+      // Simple distance formula (Pythagorean theorem) - sufficient for short distances
+      var d = Math.sqrt(
+        Math.pow(YOYO_STORES[i].lat - userLat, 2) +
+        Math.pow(YOYO_STORES[i].lng - userLng, 2)
+      );
+      if (d < minDist) {
+        minDist = d;
+        nearest = YOYO_STORES[i];
+      }
+    }
+
+    if (nearest) {
+      window.open(nearest.url, '_blank');
+    } else {
+      showOrderModal();
+    }
+  }, function(err) {
+    document.body.style.cursor = 'default';
+    // Fallback if user denies geolocation or it fails
+    showOrderModal();
+  }, { timeout: 5000 });
 }
 
 (function initCTA() {
@@ -133,18 +185,18 @@ function showOrderModal() {
   var mobileLink = document.querySelector(".nav__mobile-menu .mobile-link[style*='color: var(--red)']");
 
   if (navCta) {
-    navCta.addEventListener("click", showOrderModal);
+    navCta.addEventListener("click", handleOrderClick);
   }
   if (heroCta) {
     heroCta.addEventListener("click", function (e) {
       e.stopPropagation(); /* prevent background slider click */
-      showOrderModal();
+      handleOrderClick();
     });
   }
   if (mobileLink) {
     mobileLink.addEventListener("click", function(e) {
       e.preventDefault();
-      showOrderModal();
+      handleOrderClick();
     });
   }
 })();
